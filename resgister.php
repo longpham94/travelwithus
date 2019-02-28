@@ -19,7 +19,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	{
         echo '<script type="text/javascript"> alert("User already existed");
         window.location.href = "index.php";
-        </script>';	
+		</script>';	
 	}
 	else
 	{
@@ -27,8 +27,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
         $result=mysqli_query($dbc,$query);
         echo mysqli_errno($dbc) . ": " . mysqli_error($dbc). "\n";
         echo '<script type="text/javascript"> alert("User has been added into the system, please login and enjoy!");
-        //window.location.href = "index.php";
-        </script>';	
+        window.location.href = "index.php";
+		</script>';	
         
 	}
 }
