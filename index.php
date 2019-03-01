@@ -467,16 +467,16 @@
         <div class="modal-body mx-3">
           <form name="loginForm" method="post" action="log.php">
             <div class="form-group">
-              <label for="email">Email:</label>
-              <input required type="email" class="form-control" id="email" placeholder="Enter email" name="username">
+              <label for="email">Email</label>
+              <input required type="email" class="form-control" id="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" name="username">
             </div>
             <div class="form-group">
-              <label for="pwd">Password:</label>
-              <input required type="password" class="form-control" id="pwd" placeholder="Enter password" name="password">
+              <label for="pwd">Password</label>
+              <input required type="password" class="form-control" id="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter password'" name="password">
             </div>
-            <div class="checkbox">
+            <!-- <div class="checkbox">
               <label><input type="checkbox" name="remember"> Remember me</label>
-            </div>
+            </div> -->
             <div class="container">
               <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Login</button>
               <button type="button"  class="btn btn-info" style="margin-bottom: 10px" data-target="#Popup" data-toggle="modal" data-dismiss="modal">Register</button>
@@ -506,32 +506,32 @@
         oninput='confirm.setCustomValidity(confirm.value != password.value ? "Passwords do not match." : "")'>
         <div class="form-group">
     <label for="inputName" class="control-label"> First Name</label>
-    <input type="text" class="form-control" name="fname" placeholder="Enter First Name" required>
+    <input type="text" class="form-control" name="fname" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required>
   </div>
 
   <div class="form-group">
     <label for="inputName" class="control-label"> Last Name</label>
-    <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" required>
+    <input type="text" class="form-control" name="lname" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" required>
   </div>
   <div class="form-group">
     <label for="inputEmail" class="control-label">Email</label>
-    <input type="email" class="form-control" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" required>
+    <input type="email" class="form-control" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required>
     <div class="help-block with-errors"></div>
   </div>
 
   <div class="form-group">
     <label for="inputName" class="control-label"> Contact Number</label>
-    <input type="text" class="form-control" name="phone" placeholder="Contact Number" required>
+    <input type="text" class="form-control" name="phone" placeholder="Contact Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contact Number'" required>
   </div>
 
   <div class="form-group">
     <label for="inputPassword" class="control-label" name="password">Password</label>
     <div class="form-inline row">
       <div class="form-group col-sm-6">
-        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" name="password" required>
+        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
       </div>
       <div class="form-group col-sm-6">
-      <input type="password" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm" required>
+      <input type="password" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
         <div class="help-block with-errors"></div>
       </div>
     </div>
