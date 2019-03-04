@@ -42,7 +42,6 @@
   <link href="css/customize.css" rel="stylesheet">
   <link href="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
   <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
-  
 
 </head>
 
@@ -59,23 +58,21 @@
         <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto" data-hover="dropdown" data-animations="fadeInDown fadeInRight fadeInUp fadeInLeft">
           <li class="nav-item mx-0 mx-lg-1">
             <?php session_start();
             if(isset($_SESSION['username'])){
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="destroy.php">Sign
-              Out</a>';
-              echo '<li class="nav-item mx-0 mx-lg-1">';
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="destroy.php">Sign Out</a>';
               echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal">Create Trip</a>';
-              echo '</li>';
             }
             else {
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal"
-              data-target="#myModal">Sign
-              In</a>';
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myModal">Sign In</a>';
             }
 
             ?>
+          </li>
+          <li class="nav-item mx-0 mx-lg-1">
+            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
           </li>
 
           <li class="nav-item mx-0 mx-lg-1">
@@ -97,9 +94,9 @@
   <header class="masthead bg-primary text-white text-center">
     <div class="container">
       <img class="img-fluid mb-5 d-block mx-auto" src="img/profile.png" alt="">
-      <h1 class="text-uppercase mb-0">Start Bootstrap</h1>
+      <h1 class="text-uppercase mb-0">Dg2 Swat Test</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Web Developer - Graphic Artist - User Experience Designer</h2>
+      <h2 class="font-weight-light mb-0">Automated Testing</h2>
     </div>
   </header>
 
@@ -190,12 +187,12 @@
           </p>
         </div>
       </div>
-      <div class="text-center mt-4">
+      <!-- <div class="text-center mt-4">
         <a class="btn btn-xl btn-outline-light" href="#">
           <i class="fas fa-download mr-2"></i>
           Download Now!
         </a>
-      </div>
+      </div> -->
     </div>
   </section>
 
@@ -458,6 +455,7 @@
       </div>
     </div>
   </div>
+
   <!--Sign In Modal-->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -505,66 +503,28 @@
           </button>
         </div>
         <div class="modal-body mx-3">
-          <form name="tripForm" method="post" action="create_trip.php">
-            <div class="form-group" style="margin-bottom: 10px">
-              <label for="place"><b>Title</b></label>
-              <input required type="text" class="form-control" id="Place" placeholder="Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" name="title">
-            </div>
-            <!--Place-->
-            <div class="form-group" style="margin-bottom: 10px">
-              <label for="place"><b>Place</b></label>
+          <form name="loginForm" method="post" action="log.php">
+            <div class="form-group">
+              <label for="place">Place</label>
               <input required type="place" class="form-control" id="Place" placeholder="Place" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Place'" name="place">
             </div>
-            <!--Time-->
             <div class="form-group">
-              <div class="form-inline row">
-                <div class="form-group col-sm-6">
-                  <!--Start-->
-                  <b>Start Date</b>
-                  <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" readonly> 
-                    <span class="add-on"><i class="icon-remove"></i></span>
-                    <span class="add-on"><i class="icon-calendar"></i></span>
-                  </div> 
-                  <input type="hidden" id="dtp_input2" value=""  name="start_date"/><br/>
-                </div>
-                <div class="form-group col-sm-6">
-                  <!--End-->
-                  <b>End Date</b>
-                  <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" readonly >
-                    <span class="add-on"><i class="icon-remove"></i></span>
-                    <span class="add-on"><i class="icon-calendar"></i></span>
-                  </div>
-				          <input type="hidden" id="dtp_input3" value="" name="end_date"/><br/>
-                  <div class="help-block with-errors"></div>
-                </div>
+              <label for="pwd">Time</label>
+              <div><b>Start: </b></div>
+              <!-- <input size="16" type="text" value="" class="form_datetime" readonly> -->
+              <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+					          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
               </div>
+				      <input type="hidden" id="dtp_input2" value="" /><br/>
             </div>
-
-            <!--Member-->
-            <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
-              <b>Members</b>&nbsp &nbsp
-              <select style="margin-bottom: 10px width:auto" name="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
-                <option value="" selected disabled>1</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-                <option value="">5</option>
-                <option value="">6</option>
-                <option value="">7</option>
-                <option value="">8</option>
-                <option value="">9</option>
-                <option value="">10</option>
-              </select>
-            </div>
-
-            <!--Submit-->
             <div class="container">
-              <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Submit</button>
+              <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Login</button>
+              <button type="button"  class="btn btn-info" style="margin-bottom: 10px" data-target="#Popup" data-toggle="modal" data-dismiss="modal">Register</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal"
                 style="margin-bottom: 10px">Cancel</button>
+              <span class="psw" style="margin-bottom: 10px"><a href="#">Forgot password?</a></span>
             </div>
           </form>
         </div>
@@ -641,13 +601,17 @@
   <script src="js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
+  <!-- <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
+  <script type="text/javascript" src="./vendor/bootstrap/js/bootstrap.min.js"></script> -->
   <script src="js/freelancer.min.js"></script>
   <script src="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js?t=20130302"></script>
   <!-- <script type="text/javascript">
     $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd'});
   </script>  -->
-  <script type="text/javascript">
-	$('.form_datetime').datetimepicker({
+  <script type="text/javascript"> 
+	$('.form_date').datetimepicker({
+    // language:  'fr',
     weekStart: 1,
     todayBtn:  1,
 		autoclose: 1,
@@ -656,17 +620,7 @@
 		minView: 2,
 		forceParse: 0
     });
-  </script> 
-
-  <script type="text/javascript">
-	$(function(){
-    $(".dropdown-menu li a").click(function(){  
-      $(".btn1:first-child").text($(this).text());
-      $(".btn1:first-child").val($(this).text());
-    });
-  });
-  </script> 
-
+  </script>
 
 </body>
 

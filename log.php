@@ -11,12 +11,13 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	
 
 	$dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
-	$query="SELECT * FROM users WHERE email='".$username."' AND password='".$password."' ";
+	$query="SELECT * FROM users WHERE email='".$username."' AND password='".$password."' LIMIT 1";
 	$result=mysqli_query($dbc,$query);
 	if(mysqli_num_rows($result)==1)                         
 	{
 		$row=mysqli_fetch_array($result);
-		$_SESSION['username']=$username;	
+		$_SESSION['username']=$username;
+		$_SESSION['uid']=$row['id'];	
 	}
 	else
 	{
