@@ -569,6 +569,7 @@ EOT;
         </div>
       </div>
     </div>
+    </div>
   </div>
 
   <!--Trip Modal-->
