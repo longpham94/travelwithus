@@ -40,6 +40,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <link href="css/customize.css" rel="stylesheet">
+  <link href="css/table.css" rel="stylesheet">
   <link href="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
   <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
   
@@ -84,7 +85,7 @@
           <?php 
                       if(isset($_SESSION['username'])){
                         echo '<li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">Welcome '.$_SESSION["username"].'</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="font-size: 12px;">Welcome '.$_SESSION["username"].'</a>
                       </li>';
                       }
           ?>
@@ -102,6 +103,52 @@
       <h2 class="font-weight-light mb-0">Web Developer - Graphic Artist - User Experience Designer</h2>
     </div>
   </header>
+
+  <!-- My Trip Section -->
+    <!-- Portfolio Grid Section -->
+    <section class="mytrip" id="mytrip">
+    <div class="container">
+      <h2 class="text-center text-uppercase text-secondary mb-0">My Trips</h2>
+      <hr class="star-dark mb-5">
+      <div class="row">
+      <!-- Trip Table-->           
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Trip Name</th>
+            <th>Place</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Members</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <?php 
+          if(isset($_SESSION['username'])){
+            $trips_item="<tbody>";
+            $dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
+            $query="SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=".$_SESSION['uid'];
+            $results=mysqli_query($dbc,$query);
+            while($obj = $results->fetch_object()){
+              $trips_item .= <<<EOT
+                <tr>
+                  <td>{$obj->title}</td>
+                  <td>{$obj->place}</td>
+                  <td>{$obj->start_date}</td>
+                  <td>{$obj->end_date}</td>
+                  <td>{$obj->members}</td>
+                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')">Delete</button></td>
+                </tr>
+EOT;
+            }
+            $trips_item .= "</tbody></table>";
+            echo $trips_item;
+          }
+        ?>
+
+      </div>
+    </div>
+  </section>
 
   <!-- Portfolio Grid Section -->
   <section class="portfolio" id="portfolio">
@@ -494,6 +541,36 @@
     </div>
   </div>
 
+    <!--Delete Trip Modal-->
+    <div class="modal fade" id="delTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold">Delete Trip</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <form name="loginForm" method="post" action="del_trip.php">
+            <div class="form-group">
+              <p>You are going to delete the following trip, please confirm</p>
+            <div class="form-group">
+              <label for="pwd">Trip title</label>
+              <input  class="form-control" id="tripName" name="tripName" value="" readonly>
+              <input  class="form-control" id="tripID" name="tripID" value="" readonly display="none">
+            </div>
+            <div class="container">
+              <button type="submit" class="btn btn-success" style="margin-bottom: 10px">OK</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal"
+                style="margin-bottom: 10px">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--Trip Modal-->
   <div class="modal fade" id="myTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -546,17 +623,16 @@
             <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
               <b>Members</b>&nbsp &nbsp
               <select style="margin-bottom: 10px width:auto" name="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
-                <option value="" selected disabled>1</option>
-                <option value="">1</option>
-                <option value="">2</option>
-                <option value="">3</option>
-                <option value="">4</option>
-                <option value="">5</option>
-                <option value="">6</option>
-                <option value="">7</option>
-                <option value="">8</option>
-                <option value="">9</option>
-                <option value="">10</option>
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
               </select>
             </div>
 
@@ -666,6 +742,14 @@
     });
   });
   </script> 
+
+<script type="text/javascript">
+	function delTrip(name,id){
+    console.log(name + "----" + id);
+    $("#tripName").val(name);
+    $("#tripID").val(id);
+    };
+</script> 
 
 
 </body>
