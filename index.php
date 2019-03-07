@@ -106,13 +106,20 @@
 
   <!-- My Trip Section -->
     <!-- Portfolio Grid Section -->
-    <section class="mytrip" id="mytrip">
+    <?php
+      if(isset($_SESSION['username'])){
+        echo '<section class="mytrip" id="mytrip" style="display: block">';
+      }
+      else{
+        echo '<section class="mytrip" id="mytrip" style="display: none">';
+      }
+    ?>
     <div class="container">
       <h2 class="text-center text-uppercase text-secondary mb-0">My Trips</h2>
       <hr class="star-dark mb-5">
       <div class="row">
       <!-- Trip Table-->           
-      <table class="table table-bordered">
+      <table class="table table-bordered my-trip-table">
         <thead>
           <tr>
             <th>Trip Name</th>
@@ -140,13 +147,24 @@
                   <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button></td>
                 </tr>
+
 EOT;
+              }
+              echo $trips_item;
             }
-            $trips_item .= "</tbody></table>";
-            echo $trips_item;
+            else{
+            echo '<tr>
+              <td align="center" colspan="6">
+                <a href="#" data-toggle="modal" data-target="#myTripModal">
+                  <b>Create A New Trip</b>
+                </a>
+              </td>
+            </tr>';
+            }
           }
         ?>
-
+        </tbody>
+      </table>
       </div>
     </div>
   </section>
@@ -268,7 +286,7 @@ EOT;
             <div class="control-group">
               <div class="form-group floating-label-form-group controls mb-0 pb-2">
                 <label>Email Address</label>
-                <input class="form-control" id="email" type="email" placeholder="Email Address" required="required"
+                <input class="form-control" id="contactEmail" type="email" placeholder="Email Address" required="required"
                   data-validation-required-message="Please enter your email address.">
                 <p class="help-block text-danger"></p>
               </div>
@@ -506,6 +524,7 @@ EOT;
       </div>
     </div>
   </div>
+
   <!--Sign In Modal-->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -557,9 +576,9 @@ EOT;
             <div class="form-group">
               <p>You are going to delete the following trip, please confirm</p>
             <div class="form-group">
-              <label for="pwd">Trip title</label>
+              <label for="pwd"><b>Trip title</b></label>
               <input  class="form-control" id="tripName" name="tripName" value="" readonly>
-              <input  class="form-control" id="tripID" name="tripID" value="" readonly display="none">
+              <input  class="form-control" id="tripID" name="tripID" value="" readonly style="display: none">
             </div>
             <div class="container">
               <button type="submit" class="btn btn-success" style="margin-bottom: 10px">OK</button>
@@ -597,20 +616,22 @@ EOT;
             </div>
             <!--Time-->
             <div class="form-group">
+              <b>Time</b>
               <div class="form-inline row">
-                <div class="form-group col-sm-6">
+                <div class="form-group">
                   <!--Start-->
-                  <b>Start Date</b>
+                  <!-- <b>Start Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                     <input size="16" type="text" value="" id="start_date_val" readonly> 
+
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div> 
                   <input type="hidden" id="dtp_input2" value=""  name="start_date"/><br/>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group">
                   <!--End-->
-                  <b>End Date</b>
+                  <!-- <b>End Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
                     <input size="16" type="text" value="" id="end_date_val" readonly >
                     <span class="add-on"><i class="icon-remove"></i></span>
