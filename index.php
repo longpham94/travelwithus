@@ -136,6 +136,7 @@
             $dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
             $query="SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=".$_SESSION['uid'];
             $results=mysqli_query($dbc,$query);
+            if(mysqli_num_rows($results)==1){
             while($obj = $results->fetch_object()){
               $trips_item .= <<<EOT
                 <tr>
@@ -622,7 +623,7 @@ EOT;
                   <!--Start-->
                   <!-- <b>Start Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" id="start_date_val" readonly> 
+                    <input class="form-control" size="16" type="text" value="" id="start_date_val" readonly placeholder="Start Date" > 
 
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
@@ -633,7 +634,8 @@ EOT;
                   <!--End-->
                   <!-- <b>End Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" id="end_date_val" readonly >
+                    <input class="form-control" size="16" type="text" value="" id="end_date_val" readonly placeholder="End Date">
+
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div>
