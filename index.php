@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
   <style>
     p.solid {
@@ -591,6 +592,7 @@ EOT;
     </div>
   </div>
 
+  <!-- Long Commit ahihihh -->
   <!--Trip Modal-->
   <div class="modal fade" id="myTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
