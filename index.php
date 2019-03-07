@@ -67,7 +67,7 @@
               echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="destroy.php">Sign
               Out</a>';
               echo '<li class="nav-item mx-0 mx-lg-1">';
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal">Create Trip</a>';
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
               echo '</li>';
             }
             else {
@@ -97,10 +97,10 @@
   <!-- Header -->
   <header class="masthead bg-primary text-white text-center">
     <div class="container">
-      <img class="img-fluid mb-5 d-block mx-auto" src="img/profile.png" alt="">
-      <h1 class="text-uppercase mb-0">Start Bootstrap</h1>
+      <img class="img-fluid mb-5 d-block mx-auto" src="img/travel/beach.png" alt="">
+      <h1 class="text-uppercase mb-0">Travel With Us</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Web Developer - Graphic Artist - User Experience Designer</h2>
+      <h2 class="font-weight-light mb-0">Create new trips - Enjoy with new friends</h2>
     </div>
   </header>
 
@@ -137,7 +137,8 @@
                   <td>{$obj->start_date}</td>
                   <td>{$obj->end_date}</td>
                   <td>{$obj->members}</td>
-                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')">Delete</button></td>
+                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button></td>
                 </tr>
 EOT;
             }
@@ -577,8 +578,8 @@ EOT;
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Create Trip</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <h4 class="modal-title w-100 font-weight-bold" id="trip_modal_header">Create Trip</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="closeTripModal();">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -586,12 +587,13 @@ EOT;
           <form name="tripForm" method="post" action="create_trip.php">
             <div class="form-group" style="margin-bottom: 10px">
               <label for="place"><b>Title</b></label>
-              <input required type="text" class="form-control" id="Place" placeholder="Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" name="title">
+              <input  class="form-control" id="tripID1" name="tripID1" readonly style="display: none">
+              <input required type="text" class="form-control" id="title" placeholder="Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" name="title">
             </div>
             <!--Place-->
             <div class="form-group" style="margin-bottom: 10px">
               <label for="place"><b>Place</b></label>
-              <input required type="place" class="form-control" id="Place" placeholder="Place" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Place'" name="place">
+              <input required type="place" class="form-control" id="place" placeholder="Place" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Place'" name="place">
             </div>
             <!--Time-->
             <div class="form-group">
@@ -600,7 +602,7 @@ EOT;
                   <!--Start-->
                   <b>Start Date</b>
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" readonly> 
+                    <input size="16" type="text" value="" id="start_date_val" readonly> 
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div> 
@@ -610,7 +612,7 @@ EOT;
                   <!--End-->
                   <b>End Date</b>
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" readonly >
+                    <input size="16" type="text" value="" id="end_date_val" readonly >
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div>
@@ -623,7 +625,7 @@ EOT;
             <!--Member-->
             <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
               <b>Members</b>&nbsp &nbsp
-              <select style="margin-bottom: 10px width:auto" name="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
+              <select style="margin-bottom: 10px width:auto" name="members" id="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
                 <option value="1" selected>1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -641,7 +643,7 @@ EOT;
             <div class="container">
               <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Submit</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal"
-                style="margin-bottom: 10px">Cancel</button>
+                style="margin-bottom: 10px" onClick="closeTripModal();">Cancel</button>
             </div>
           </form>
         </div>
@@ -750,6 +752,30 @@ EOT;
     $("#tripName").val(name);
     $("#tripID").val(id);
     };
+
+  function editTrip(id,name,place,start_date,end_date,members){
+    console.log(name + "----" + id + "---" +place+"---"+start_date+"---"+end_date+"---"+members);
+    $("#tripID1").val(id);
+    $("#title").val(name);
+    $("#start_date_val").val(start_date);
+    $("#end_date_val").val(end_date);
+    $("#place").val(place);
+    $("#dtp_input2").val(start_date);
+    $("#dtp_input3").val(end_date);
+    $("#members").val(members);
+    $("#trip_modal_header").text("Edit Trip");
+    };
+  function closeTripModal(){
+    $("#tripID1").val("NONE");
+    $("#title").val("");
+    $("#start_date_val").val("");
+    $("#end_date_val").val("");
+    $("#place").val("");
+    $("#dtp_input2").val("");
+    $("#dtp_input3").val("");
+    $("#members").val("");
+    $("#trip_modal_header").text("Create Trip");
+  }
 </script> 
 
 
