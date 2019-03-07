@@ -539,12 +539,12 @@ EOT;
         <div class="modal-body mx-3">
           <form name="loginForm" method="post" action="log.php">
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email"><b>Email</b></label>
               <input required type="email" class="form-control" id="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" name="username">
             </div>
             <div class="form-group">
-              <label for="pwd">Password</label>
-              <input required type="password" class="form-control" id="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter password'" name="password">
+              <label for="pwd"><b>Password</b></label>
+              <input required autocomplete="off" type="password" class="form-control" id="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter password'" name="password">
             </div>
             <!-- <div class="checkbox">
               <label><input type="checkbox" name="remember"> Remember me</label>
@@ -624,7 +624,6 @@ EOT;
                   <!-- <b>Start Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                     <input class="form-control" size="16" type="text" value="" id="start_date_val" readonly placeholder="Start Date" > 
-
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div> 
@@ -634,8 +633,7 @@ EOT;
                   <!--End-->
                   <!-- <b>End Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
-                    <input class="form-control" size="16" type="text" value="" id="end_date_val" readonly placeholder="End Date">
-
+                    <input  class="form-control" size="16" type="text" value="" id="end_date_val" readonly placeholder="End Date">
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div>
@@ -648,7 +646,7 @@ EOT;
             <!--Member-->
             <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
               <b>Members</b>&nbsp &nbsp
-              <select style="margin-bottom: 10px width:auto" name="members" id="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
+              <select required style="margin-bottom: 10px width:auto" name="members" id="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
                 <option value="1" selected>1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -680,7 +678,7 @@ EOT;
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Sign Up</h4>
+          <h4 class="modal-title w-100 font-weight-bold"><b>Sign Up</b></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -689,33 +687,50 @@ EOT;
         <form name="signupForm" method="post" action="resgister.php" id="signup" onsubmit="return ValidateFname() || ValidateLname() || ValidateEmail() || ValidateMobile() "
         oninput='confirm.setCustomValidity(confirm.value != password.value ? "Passwords do not match." : "")'>
         <div class="form-group">
-    <label for="inputName" class="control-label"> First Name</label>
+    <label for="inputName" class="control-label"><b>First Name</b></label>
     <input type="text" class="form-control" name="fname" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'" required>
   </div>
 
   <div class="form-group">
-    <label for="inputName" class="control-label"> Last Name</label>
+    <label for="inputName" class="control-label"><b>Last Name</b></label>
     <input type="text" class="form-control" name="lname" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'" required>
   </div>
+  
+  <!--Long adds radio buttons: START-->
   <div class="form-group">
-    <label for="inputEmail" class="control-label">Email</label>
+    <label for="gender" class="control-label"><b>Gender</b></label>
+    <div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="male" value="male" checked>
+        <label class="form-check-label" for="inlineRadio1">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="female" value="female">
+        <label class="form-check-label" for="inlineRadio2">Female</label>
+      </div> 
+    </div>
+  </div>
+  <!--Long adds radio buttons: END-->
+
+  <div class="form-group">
+    <label for="inputEmail" class="control-label"><b>Email</b></label>
     <input type="email" class="form-control" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required>
     <div class="help-block with-errors"></div>
   </div>
 
   <div class="form-group">
-    <label for="inputName" class="control-label"> Contact Number</label>
+    <label for="inputName" class="control-label"><b>Contact Number</b></label>
     <input type="text" class="form-control" name="phone" placeholder="Contact Number" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contact Number'" required>
   </div>
 
   <div class="form-group">
-    <label for="inputPassword" class="control-label" name="password">Password</label>
+    <label for="inputPassword" class="control-label" name="password"><b>Password</b></label>
     <div class="form-inline row">
       <div class="form-group col-sm-6">
-        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
+        <input autocomplete="off" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
       </div>
       <div class="form-group col-sm-6">
-      <input type="password" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
+      <input type="password" autocomplete="off" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
         <div class="help-block with-errors"></div>
       </div>
     </div>
