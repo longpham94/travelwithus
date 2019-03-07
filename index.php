@@ -106,13 +106,20 @@
 
   <!-- My Trip Section -->
     <!-- Portfolio Grid Section -->
-    <section class="mytrip" id="mytrip">
+    <?php
+      if(isset($_SESSION['username'])){
+        echo '<section class="mytrip" id="mytrip" style="display: block">';
+      }
+      else{
+        echo '<section class="mytrip" id="mytrip" style="display: none">';
+      }
+    ?>
     <div class="container">
       <h2 class="text-center text-uppercase text-secondary mb-0">My Trips</h2>
       <hr class="star-dark mb-5">
       <div class="row">
       <!-- Trip Table-->           
-      <table class="table table-bordered">
+      <table class="table table-bordered my-trip-table">
         <thead>
           <tr>
             <th>Trip Name</th>
@@ -129,23 +136,34 @@
             $dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
             $query="SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=".$_SESSION['uid'];
             $results=mysqli_query($dbc,$query);
-            while($obj = $results->fetch_object()){
-              $trips_item .= <<<EOT
-                <tr>
-                  <td>{$obj->title}</td>
-                  <td>{$obj->place}</td>
-                  <td>{$obj->start_date}</td>
-                  <td>{$obj->end_date}</td>
-                  <td>{$obj->members}</td>
-                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')">Delete</button></td>
-                </tr>
+            if(mysqli_num_rows($results)==1){
+              while($obj = $results->fetch_object()){
+                $trips_item .= <<<EOT
+                  <tr>
+                    <td>{$obj->title}</td>
+                    <td>{$obj->place}</td>
+                    <td>{$obj->start_date}</td>
+                    <td>{$obj->end_date}</td>
+                    <td>{$obj->members}</td>
+                    <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')">Delete</button></td>
+                  </tr>
 EOT;
+              }
+              echo $trips_item;
             }
-            $trips_item .= "</tbody></table>";
-            echo $trips_item;
+            else{
+            echo '<tr>
+              <td align="center" colspan="6">
+                <a href="#" data-toggle="modal" data-target="#myTripModal">
+                  <b>Create A New Trip</b>
+                </a>
+              </td>
+            </tr>';
+            }
           }
         ?>
-
+        </tbody>
+      </table>
       </div>
     </div>
   </section>
@@ -267,7 +285,7 @@ EOT;
             <div class="control-group">
               <div class="form-group floating-label-form-group controls mb-0 pb-2">
                 <label>Email Address</label>
-                <input class="form-control" id="email" type="email" placeholder="Email Address" required="required"
+                <input class="form-control" id="contactEmail" type="email" placeholder="Email Address" required="required"
                   data-validation-required-message="Please enter your email address.">
                 <p class="help-block text-danger"></p>
               </div>
@@ -505,6 +523,7 @@ EOT;
       </div>
     </div>
   </div>
+
   <!--Sign In Modal-->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -556,9 +575,9 @@ EOT;
             <div class="form-group">
               <p>You are going to delete the following trip, please confirm</p>
             <div class="form-group">
-              <label for="pwd">Trip title</label>
+              <label for="pwd"><b>Trip title</b></label>
               <input  class="form-control" id="tripName" name="tripName" value="" readonly>
-              <input  class="form-control" id="tripID" name="tripID" value="" readonly display="none">
+              <input  class="form-control" id="tripID" name="tripID" value="" readonly style="display: none">
             </div>
             <div class="container">
               <button type="submit" class="btn btn-success" style="margin-bottom: 10px">OK</button>
@@ -586,7 +605,7 @@ EOT;
           <form name="tripForm" method="post" action="create_trip.php">
             <div class="form-group" style="margin-bottom: 10px">
               <label for="place"><b>Title</b></label>
-              <input required type="text" class="form-control" id="Place" placeholder="Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" name="title">
+              <input required type="text" class="form-control" id="Title" placeholder="Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" name="title">
             </div>
             <!--Place-->
             <div class="form-group" style="margin-bottom: 10px">
@@ -595,22 +614,23 @@ EOT;
             </div>
             <!--Time-->
             <div class="form-group">
+              <b>Time</b>
               <div class="form-inline row">
-                <div class="form-group col-sm-6">
+                <div class="form-group">
                   <!--Start-->
-                  <b>Start Date</b>
+                  <!-- <b>Start Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" readonly> 
+                    <input class="form-control" size="16" type="text" value="" readonly placeholder="Start Date" > 
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div> 
                   <input type="hidden" id="dtp_input2" value=""  name="start_date"/><br/>
                 </div>
-                <div class="form-group col-sm-6">
+                <div class="form-group">
                   <!--End-->
-                  <b>End Date</b>
+                  <!-- <b>End Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
-                    <input size="16" type="text" value="" readonly >
+                    <input class="form-control" size="16" type="text" value="" readonly placeholder="End Date">
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div>
@@ -623,7 +643,7 @@ EOT;
             <!--Member-->
             <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
               <b>Members</b>&nbsp &nbsp
-              <select style="margin-bottom: 10px width:auto" name="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
+              <select class="form-control" style="margin-bottom: 10px width:auto" name="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
                 <option value="1" selected>1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
