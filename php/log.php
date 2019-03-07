@@ -9,7 +9,6 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	echo "Please log in again";
 	$password=md5($password);
 	
-
 	$dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
 	$query="SELECT * FROM users WHERE email='".$username."' AND password='".$password."' LIMIT 1";
 	$result=mysqli_query($dbc,$query);
@@ -29,13 +28,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 if(isset($_SESSION['username'])){
 
 	$uname=$_SESSION['username'];
-	header("Location: index.php");
-	// if($uname=='admin@example.com'){
-	// 	header("Location: admin.php");
-	// }
-	// else{
-	// 	header("Location: fandom.php");
-	// }
+	header("Location: ../index.php");
 }
 function filter($str)
 {

@@ -64,7 +64,7 @@
           <li class="nav-item mx-0 mx-lg-1">
             <?php session_start();
             if(isset($_SESSION['username'])){
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="destroy.php">Sign
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="./php/destroy.php">Sign
               Out</a>';
               echo '<li class="nav-item mx-0 mx-lg-1">';
               echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
@@ -537,7 +537,7 @@ EOT;
           </button>
         </div>
         <div class="modal-body mx-3">
-          <form name="loginForm" method="post" action="log.php">
+          <form name="loginForm" method="post" action="./php/log.php">
             <div class="form-group">
               <label for="email"><b>Email</b></label>
               <input required type="email" class="form-control" id="email" placeholder="Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter email'" name="username">
@@ -573,7 +573,7 @@ EOT;
           </button>
         </div>
         <div class="modal-body mx-3">
-          <form name="loginForm" method="post" action="del_trip.php">
+          <form name="loginForm" method="post" action="./php/del_trip.php">
             <div class="form-group">
               <p>You are going to delete the following trip, please confirm</p>
             <div class="form-group">
@@ -604,7 +604,7 @@ EOT;
           </button>
         </div>
         <div class="modal-body mx-3">
-          <form name="tripForm" method="post" action="create_trip.php">
+          <form name="tripForm" method="post" action="./php/create_trip.php">
             <div class="form-group" style="margin-bottom: 10px">
               <label for="place"><b>Title</b></label>
               <input  class="form-control" id="tripID1" name="tripID1" readonly style="display: none">
@@ -659,7 +659,6 @@ EOT;
                 <option value="10">10</option>
               </select>
             </div>
-
             <!--Submit-->
             <div class="container">
               <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Submit</button>
@@ -684,7 +683,7 @@ EOT;
           </button>
         </div>
         <div class="modal-body mx-3">
-        <form name="signupForm" method="post" action="resgister.php" id="signup" onsubmit="return ValidateFname() || ValidateLname() || ValidateEmail() || ValidateMobile() "
+        <form name="signupForm" method="post" action="./php/register.php" id="signup" onsubmit="return ValidateFname() || ValidateLname() || ValidateEmail() || ValidateMobile() "
         oninput='confirm.setCustomValidity(confirm.value != password.value ? "Passwords do not match." : "")'>
         <div class="form-group">
     <label for="inputName" class="control-label"><b>First Name</b></label>
