@@ -624,6 +624,7 @@ EOT;
                   <!-- <b>Start Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
                     <input class="form-control" size="16" type="text" value="" id="start_date_val" readonly placeholder="Start Date" > 
+
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div> 
@@ -634,6 +635,7 @@ EOT;
                   <!-- <b>End Date</b> -->
                   <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
                     <input class="form-control" size="16" type="text" value="" id="end_date_val" readonly placeholder="End Date">
+
                     <span class="add-on"><i class="icon-remove"></i></span>
                     <span class="add-on"><i class="icon-calendar"></i></span>
                   </div>
