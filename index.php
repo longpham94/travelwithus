@@ -322,7 +322,7 @@ EOT;
                     <h4 class="text-uppercase mb-4">Around the Web</h4>
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
+                            <a class="btn btn-outline-light btn-social text-center rounded-circle" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/" title="facebook">
                                 <i class="fab fa-fw fa-facebook-f"></i>
                             </a>
                         </li>
