@@ -1,5 +1,5 @@
 <?php
-function callAPI($method, $url, $data)
+function callAPI($method, $url, $data, $headers = false)
 {
    $curl = curl_init();
 
@@ -21,10 +21,18 @@ function callAPI($method, $url, $data)
 
    // OPTIONS:
    curl_setopt($curl, CURLOPT_URL, $url);
-   curl_setopt($curl, CURLOPT_HTTPHEADER, array(
-      'APIKEY: 111111111111111111111',
-      'Content-Type: application/json',
-   ));
+   if(!$headers){
+       curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+          'APIKEY: 111111111111111111111',
+          'Content-Type: application/json',
+       ));
+   }else{
+       curl_setopt($curl, CURLOPT_HTTPHEADER, array(
+          'APIKEY: 111111111111111111111',
+          'Content-Type: application/json',
+          $headers
+       ));
+   }
    curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
    curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 
@@ -36,4 +44,3 @@ function callAPI($method, $url, $data)
    curl_close($curl);
    return $result;
 }
- 
