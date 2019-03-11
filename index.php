@@ -131,7 +131,7 @@
                   $dbc = mysqli_connect('localhost', 'dmhuy', '123456', 'online') or die("Cannot connect to Database ");
                   $query = "SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=" . $_SESSION['uid'];
                   $results = mysqli_query($dbc, $query);
-                  if (mysqli_num_rows($results) == 1) {
+                  if (mysqli_num_rows($results) != 0) {
                     while ($obj = $results->fetch_object()) {
                       $trips_item .= <<<EOT
                 <tr>
@@ -712,10 +712,10 @@ EOT;
                             <label for="inputPassword" class="control-label" name="password"><b>Password</b></label>
                             <div class="form-inline row">
                                 <div class="form-group col-sm-6">
-                                    <input autocomplete="off" type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
+                                    <input autocomplete="off" type="password" pattern=".{6,}" title="Password must be longer than 5 characters" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input type="password" autocomplete="off" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
+                                    <input type="password" autocomplete="off" pattern=".{6,}" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
                                     <div class="help-block with-errors"></div>
                                 </div>
                             </div>
