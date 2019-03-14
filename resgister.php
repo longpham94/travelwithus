@@ -8,7 +8,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
     $password=filter($_POST['password']);
     $fname=filter($_POST['fname']);
     $lname=filter($_POST['lname']);
-    $phone=filter($_POST['phone']);
+	$phone=filter($_POST['phone']);
+	$firebase_password=$password;
 	$password=md5($password);
 	
 
@@ -25,8 +26,20 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	{
         $query="INSERT INTO users (fname,lname,phone,email,password) values ('".$fname."', '".$lname."','".$phone."','".$username."','".$password."')";
         $result=mysqli_query($dbc,$query);
-        echo mysqli_errno($dbc) . ": " . mysqli_error($dbc). "\n";
-        echo '<script type="text/javascript"> alert("User has been added into the system, please login and enjoy!");
+		echo mysqli_errno($dbc) . ": " . mysqli_error($dbc). "\n";
+		$url = 'http://localhost:3000/user/create';
+		$data = array('email' => $username, 'password' => $firebase_password);	
+		$options = array(
+			'http' => array(
+				'header'  => "Content-type: application/json",
+				'method'  => 'POST',
+				'content' => json_encode($data)
+			)
+		);
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+		if ($result === FALSE) { /* Handle error */ }
+        echo '<script type="text/javascript"> alert("Congratulations! Welcome to our trips. A Validation email has been sent to '.$username.', please check your inbox.");
         window.location.href = "index.php";
 		</script>';	
         

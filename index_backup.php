@@ -40,8 +40,10 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <link href="css/customize.css" rel="stylesheet">
+  <link href="css/table.css" rel="stylesheet">
   <link href="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
   <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+  
 
 </head>
 
@@ -58,21 +60,23 @@
         <i class="fas fa-bars"></i>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto" data-hover="dropdown" data-animations="fadeInDown fadeInRight fadeInUp fadeInLeft">
+        <ul class="navbar-nav ml-auto">
           <li class="nav-item mx-0 mx-lg-1">
             <?php session_start();
             if(isset($_SESSION['username'])){
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="destroy.php">Sign Out</a>';
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal">Create Trip</a>';
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="destroy.php">Sign
+              Out</a>';
+              echo '<li class="nav-item mx-0 mx-lg-1">';
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
+              echo '</li>';
             }
             else {
-              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myModal">Sign In</a>';
+              echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal"
+              data-target="#myModal">Sign
+              In</a>';
             }
 
             ?>
-          </li>
-          <li class="nav-item mx-0 mx-lg-1">
-            <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
           </li>
 
           <li class="nav-item mx-0 mx-lg-1">
@@ -81,7 +85,7 @@
           <?php 
                       if(isset($_SESSION['username'])){
                         echo '<li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger">Welcome '.$_SESSION["username"].'</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="font-size: 12px;">Welcome '.$_SESSION["username"].'</a>
                       </li>';
                       }
           ?>
@@ -91,19 +95,85 @@
   </nav>
 
   <!-- Header -->
-  <header class="masthead bg-primary text-white text-center">
-    <div class="container">
-      <img class="img-fluid mb-5 d-block mx-auto" src="img/profile.png" alt="">
-      <h1 class="text-uppercase mb-0">Dg2 Swat Test</h1>
+  <header class="masthead bg-primary text-white text-center" >
+    <div class="container" >
+      <img class="img-fluid mb-5 d-block mx-auto" src="img/travel/phu_quoc.jpg" alt="" width="1100" height="500">
+      <h1 class="text-uppercase mb-0">Travel With Us</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Automated Testing</h2>
+      <h2 class="font-weight-light mb-0">Create new trips - Enjoy with new friends</h2>
     </div>
   </header>
+
+  <!-- My Trip Section -->
+    <!-- Portfolio Grid Section -->
+    <?php
+      if(isset($_SESSION['username'])){
+        echo '<section class="mytrip" id="mytrip" style="display: block">';
+      }
+      else{
+        echo '<section class="mytrip" id="mytrip" style="display: none">';
+      }
+    ?>
+    <div class="container">
+      <h2 class="text-center text-uppercase text-secondary mb-0">My Trips</h2>
+      <hr class="star-dark mb-5">
+      <div class="row">
+      <!-- Trip Table-->           
+      <table class="table table-bordered my-trip-table">
+        <thead>
+          <tr>
+            <th>Trip Name</th>
+            <th>Place</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Members</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <?php 
+          if(isset($_SESSION['username'])){
+            $trips_item="<tbody>";
+            $dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
+            $query="SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=".$_SESSION['uid'];
+            $results=mysqli_query($dbc,$query);
+            if(mysqli_num_rows($results)==1){
+            while($obj = $results->fetch_object()){
+              $trips_item .= <<<EOT
+                <tr>
+                  <td>{$obj->title}</td>
+                  <td>{$obj->place}</td>
+                  <td>{$obj->start_date}</td>
+                  <td>{$obj->end_date}</td>
+                  <td>{$obj->members}</td>
+                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button></td>
+                </tr>
+
+EOT;
+              }
+              echo $trips_item;
+            }
+            else{
+            echo '<tr>
+              <td align="center" colspan="6">
+                <a href="#" data-toggle="modal" data-target="#myTripModal">
+                  <b>Create A New Trip</b>
+                </a>
+              </td>
+            </tr>';
+            }
+          }
+        ?>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </section>
 
   <!-- Portfolio Grid Section -->
   <section class="portfolio" id="portfolio">
     <div class="container">
-      <h2 class="text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+      <h2 class="text-center text-uppercase text-secondary mb-0">WHERE TO GO?</h2>
       <hr class="star-dark mb-5">
       <div class="row">
         <div class="col-md-6 col-lg-4">
@@ -187,12 +257,12 @@
           </p>
         </div>
       </div>
-      <!-- <div class="text-center mt-4">
+      <div class="text-center mt-4">
         <a class="btn btn-xl btn-outline-light" href="#">
           <i class="fas fa-download mr-2"></i>
           Download Now!
         </a>
-      </div> -->
+      </div>
     </div>
   </section>
 
@@ -217,7 +287,7 @@
             <div class="control-group">
               <div class="form-group floating-label-form-group controls mb-0 pb-2">
                 <label>Email Address</label>
-                <input class="form-control" id="email" type="email" placeholder="Email Address" required="required"
+                <input class="form-control" id="contactEmail" type="email" placeholder="Email Address" required="required"
                   data-validation-required-message="Please enter your email address.">
                 <p class="help-block text-danger"></p>
               </div>
@@ -492,39 +562,111 @@
     </div>
   </div>
 
-  <!--Trip Modal-->
-  <div class="modal fade" id="myTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!--Delete Trip Modal-->
+    <div class="modal fade" id="delTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header text-center">
-          <h4 class="modal-title w-100 font-weight-bold">Create Trip</h4>
+          <h4 class="modal-title w-100 font-weight-bold">Delete Trip</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body mx-3">
-          <form name="loginForm" method="post" action="log.php">
+          <form name="loginForm" method="post" action="del_trip.php">
             <div class="form-group">
-              <label for="place">Place</label>
-              <input required type="place" class="form-control" id="Place" placeholder="Place" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Place'" name="place">
-            </div>
+              <p>You are going to delete the following trip, please confirm</p>
             <div class="form-group">
-              <label for="pwd">Time</label>
-              <div><b>Start: </b></div>
-              <!-- <input size="16" type="text" value="" class="form_datetime" readonly> -->
-              <div class="input-group date form_date col-md-5" data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                    <input class="form-control" size="16" type="text" value="" readonly>
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
-					          <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-              </div>
-				      <input type="hidden" id="dtp_input2" value="" /><br/>
+              <label for="pwd"><b>Trip title</b></label>
+              <input  class="form-control" id="tripName" name="tripName" value="" readonly>
+              <input  class="form-control" id="tripID" name="tripID" value="" readonly style="display: none">
             </div>
             <div class="container">
-              <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Login</button>
-              <button type="button"  class="btn btn-info" style="margin-bottom: 10px" data-target="#Popup" data-toggle="modal" data-dismiss="modal">Register</button>
+              <button type="submit" class="btn btn-success" style="margin-bottom: 10px">OK</button>
               <button type="button" class="btn btn-danger" data-dismiss="modal"
                 style="margin-bottom: 10px">Cancel</button>
-              <span class="psw" style="margin-bottom: 10px"><a href="#">Forgot password?</a></span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <!--Trip Modal-->
+  <div class="modal fade" id="myTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header text-center">
+          <h4 class="modal-title w-100 font-weight-bold" id="trip_modal_header">Create Trip</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick="closeTripModal();">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mx-3">
+          <form name="tripForm" method="post" action="create_trip.php">
+            <div class="form-group" style="margin-bottom: 10px">
+              <label for="place"><b>Title</b></label>
+              <input  class="form-control" id="tripID1" name="tripID1" readonly style="display: none">
+              <input required type="text" class="form-control" id="title" placeholder="Title" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Title'" name="title">
+            </div>
+            <!--Place-->
+            <div class="form-group" style="margin-bottom: 10px">
+              <label for="place"><b>Place</b></label>
+              <input required type="place" class="form-control" id="place" placeholder="Place" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Place'" name="place">
+            </div>
+            <!--Time-->
+            <div class="form-group">
+              <b>Time</b>
+              <div class="form-inline row">
+                <div class="form-group">
+                  <!--Start-->
+                  <!-- <b>Start Date</b> -->
+                  <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="" id="start_date_val" readonly placeholder="Start Date" > 
+
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                  </div> 
+                  <input type="hidden" id="dtp_input2" value=""  name="start_date"/><br/>
+                </div>
+                <div class="form-group">
+                  <!--End-->
+                  <!-- <b>End Date</b> -->
+                  <div class="input-append date form_datetime col-md-5" style="margin-bottom: 10px"  data-date="" data-date-format="dd MM yyyy" data-link-field="dtp_input3" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="" id="end_date_val" readonly placeholder="End Date">
+
+                    <span class="add-on"><i class="icon-remove"></i></span>
+                    <span class="add-on"><i class="icon-calendar"></i></span>
+                  </div>
+				          <input type="hidden" id="dtp_input3" value="" name="end_date"/><br/>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+            </div>
+
+            <!--Member-->
+            <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
+              <b>Members</b>&nbsp &nbsp
+              <select style="margin-bottom: 10px width:auto" name="members" id="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
+                <option value="1" selected>1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            <!--Submit-->
+            <div class="container">
+              <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Submit</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal"
+                style="margin-bottom: 10px" onClick="closeTripModal();">Cancel</button>
             </div>
           </form>
         </div>
@@ -557,7 +699,7 @@
   </div>
   <div class="form-group">
     <label for="inputEmail" class="control-label">Email</label>
-    <input type="email" class="form-control" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required>
+    <input type="email" class="form-control" id="resEmail" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required>
     <div class="help-block with-errors"></div>
   </div>
 
@@ -570,7 +712,7 @@
     <label for="inputPassword" class="control-label" name="password">Password</label>
     <div class="form-inline row">
       <div class="form-group col-sm-6">
-        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
+        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required pattern=".{6,}" title="Must be longer than 6 characters">
       </div>
       <div class="form-group col-sm-6">
       <input type="password" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
@@ -579,7 +721,7 @@
     </div>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" onClick="createUserFireBase()">Submit</button>
   </div>
 </form>
         </div>
@@ -601,17 +743,14 @@
   <script src="js/contact_me.js"></script>
 
   <!-- Custom scripts for this template -->
-  <!-- <script type="text/javascript" src="./js/bootstrap-datetimepicker.js" charset="UTF-8"></script>
-  <script type="text/javascript" src="./jquery/jquery-1.8.3.min.js" charset="UTF-8"></script>
-  <script type="text/javascript" src="./vendor/bootstrap/js/bootstrap.min.js"></script> -->
   <script src="js/freelancer.min.js"></script>
+  <script src="firebase/email.js"></script>
   <script src="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js?t=20130302"></script>
   <!-- <script type="text/javascript">
     $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd'});
   </script>  -->
-  <script type="text/javascript"> 
-	$('.form_date').datetimepicker({
-    // language:  'fr',
+  <script type="text/javascript">
+	$('.form_datetime').datetimepicker({
     weekStart: 1,
     todayBtn:  1,
 		autoclose: 1,
@@ -620,7 +759,49 @@
 		minView: 2,
 		forceParse: 0
     });
-  </script>
+  </script> 
+
+  <script type="text/javascript">
+	$(function(){
+    $(".dropdown-menu li a").click(function(){  
+      $(".btn1:first-child").text($(this).text());
+      $(".btn1:first-child").val($(this).text());
+    });
+  });
+  </script> 
+
+<script type="text/javascript">
+	function delTrip(name,id){
+    console.log(name + "----" + id);
+    $("#tripName").val(name);
+    $("#tripID").val(id);
+    };
+
+  function editTrip(id,name,place,start_date,end_date,members){
+    console.log(name + "----" + id + "---" +place+"---"+start_date+"---"+end_date+"---"+members);
+    $("#tripID1").val(id);
+    $("#title").val(name);
+    $("#start_date_val").val(start_date);
+    $("#end_date_val").val(end_date);
+    $("#place").val(place);
+    $("#dtp_input2").val(start_date);
+    $("#dtp_input3").val(end_date);
+    $("#members").val(members);
+    $("#trip_modal_header").text("Edit Trip");
+    };
+  function closeTripModal(){
+    $("#tripID1").val("NONE");
+    $("#title").val("");
+    $("#start_date_val").val("");
+    $("#end_date_val").val("");
+    $("#place").val("");
+    $("#dtp_input2").val("");
+    $("#dtp_input3").val("");
+    $("#members").val("");
+    $("#trip_modal_header").text("Create Trip");
+  }
+</script> 
+
 
 </body>
 

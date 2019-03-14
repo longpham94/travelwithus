@@ -41,6 +41,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
   <link href="css/customize.css" rel="stylesheet">
   <link href="css/table.css" rel="stylesheet">
+  <link href="css/image.css" rel="stylesheet">
   <link href="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
   <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
   
@@ -85,7 +86,7 @@
           <?php 
                       if(isset($_SESSION['username'])){
                         echo '<li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="font-size: 12px;">Welcome '.$_SESSION["username"].'</a>
+                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="font-size: 16px;">Welcome '.$_SESSION["username"].'</a>
                       </li>';
                       }
           ?>
@@ -95,12 +96,41 @@
   </nav>
 
   <!-- Header -->
-  <header class="masthead bg-primary text-white text-center">
-    <div class="container">
-      <img class="img-fluid mb-5 d-block mx-auto" src="img/travel/beach.png" alt="">
-      <h1 class="text-uppercase mb-0">Travel With Us</h1>
+  <header class=" bg-primary  text-center text-white">
+    <div class="container-fluid" style="background-image: url('img/travel/background3.jpg');">
+    <div id="demo" class="carousel slide" data-ride="carousel">
+
+<!-- Indicators -->
+<ul class="carousel-indicators">
+  <li data-target="#demo" data-slide-to="0" class="active"></li>
+  <li data-target="#demo" data-slide-to="1"></li>
+  <li data-target="#demo" data-slide-to="2"></li>
+</ul>
+
+<!-- The slideshow -->
+<div class="carousel-inner">
+  <div class="carousel-item active" >
+    <img class="img-fluid mb-5 d-block mx-auto" src="img/travel/phu_quoc.jpg" alt="Los Angeles" width="1100" height="500" style="margin-top: 160px;">
+  </div>
+  <div class="carousel-item" >
+    <img class="img-fluid mb-5 d-block mx-auto" src="img/travel/da_lat.jpg" alt="Chicago" width="1100" height="500" style="margin-top: 160px;">
+  </div>
+  <div class="carousel-item" >
+    <img class="img-fluid mb-5 d-block mx-auto" src="img/travel/nha_trang.jpg" alt="New York" width="1100" height="500" style="margin-top: 160px;">
+  </div>
+</div>
+
+<!-- Left and right controls -->
+<a class="carousel-control-prev" href="#demo" data-slide="prev">
+  <span class="carousel-control-prev-icon"></span>
+</a>
+<a class="carousel-control-next" href="#demo" data-slide="next">
+  <span class="carousel-control-next-icon"></span>
+</a>
+</div>
+<h1 class="text-uppercase mb-0">Travel With Us</h1>
       <hr class="star-light">
-      <h2 class="font-weight-light mb-0">Create new trips - Enjoy with new friends</h2>
+      <h2 class="font-weight-light mb-0" style="padding-bottom: 40px;">Create new trips - Enjoy with new friends</h2>
     </div>
   </header>
 
@@ -108,13 +138,13 @@
     <!-- Portfolio Grid Section -->
     <?php
       if(isset($_SESSION['username'])){
-        echo '<section class="mytrip" id="mytrip" style="display: block">';
+        echo '<section class="mytrip" id="mytrip" style="display: block;">';
       }
       else{
         echo '<section class="mytrip" id="mytrip" style="display: none">';
       }
     ?>
-    <div class="container">
+    <div class="container" >
       <h2 class="text-center text-uppercase text-secondary mb-0">My Trips</h2>
       <hr class="star-dark mb-5">
       <div class="row">
@@ -136,7 +166,7 @@
             $dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
             $query="SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=".$_SESSION['uid'];
             $results=mysqli_query($dbc,$query);
-            if(mysqli_num_rows($results)==1){
+            if(mysqli_num_rows($results)!=0){
             while($obj = $results->fetch_object()){
               $trips_item .= <<<EOT
                 <tr>
@@ -171,69 +201,75 @@ EOT;
   </section>
 
   <!-- Portfolio Grid Section -->
-  <section class="portfolio" id="portfolio">
+  <section class="portfolio" id="portfolio" style="background-image: url('img/travel/background2.jpg');">
     <div class="container">
-      <h2 class="text-center text-uppercase text-secondary mb-0">Portfolio</h2>
+      <h2 class="text-center text-uppercase text-secondary mb-0">WHERE TO GO?</h2>
       <hr class="star-dark mb-5">
       <div class="row">
         <div class="col-md-6 col-lg-4">
           <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-1">
             <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
               <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <p>ISLAND<p>
                 <i class="fas fa-search-plus fa-3x"></i>
               </div>
             </div>
-            <img class="img-fluid" src="img/portfolio/cabin.png" alt="">
+            <img class=" img-where" src="img/travel/phu_quoc.jpg" alt="">
           </a>
         </div>
         <div class="col-md-6 col-lg-4">
           <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-2">
             <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
               <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <p>FLOWER FIELD<p>
                 <i class="fas fa-search-plus fa-3x"></i>
               </div>
             </div>
-            <img class="img-fluid" src="img/portfolio/cake.png" alt="">
+            <img class=" img-where" src="img/travel/da_lat.jpg" alt="">
           </a>
         </div>
         <div class="col-md-6 col-lg-4">
           <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-3">
             <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
               <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <p>BEACH<p>
                 <i class="fas fa-search-plus fa-3x"></i>
               </div>
             </div>
-            <img class="img-fluid" src="img/portfolio/circus.png" alt="">
+            <img class=" img-where" src="img/travel/nha_trang.jpg" alt="">
           </a>
         </div>
         <div class="col-md-6 col-lg-4">
           <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-4">
             <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
               <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <p>CULTRURE<p>
                 <i class="fas fa-search-plus fa-3x"></i>
               </div>
             </div>
-            <img class="img-fluid" src="img/portfolio/game.png" alt="">
+            <img class=" img-where" src="img/travel/tay_bac.jpg" alt="">
           </a>
         </div>
         <div class="col-md-6 col-lg-4">
           <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-5">
             <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
               <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <p>MOUNTAIN<p>
                 <i class="fas fa-search-plus fa-3x"></i>
               </div>
             </div>
-            <img class="img-fluid" src="img/portfolio/safe.png" alt="">
+            <img class=" img-where" src="img/travel/mountain.jpg" alt="">
           </a>
         </div>
         <div class="col-md-6 col-lg-4">
           <a class="portfolio-item d-block mx-auto" href="#portfolio-modal-6">
             <div class="portfolio-item-caption d-flex position-absolute h-100 w-100">
               <div class="portfolio-item-caption-content my-auto w-100 text-center text-white">
+                <p>ANIMAL<p>
                 <i class="fas fa-search-plus fa-3x"></i>
               </div>
             </div>
-            <img class="img-fluid" src="img/portfolio/submarine.png" alt="">
+            <img class=" img-where" src="img/travel/animal.jpg" alt="">
           </a>
         </div>
       </div>
@@ -393,7 +429,7 @@ EOT;
           <div class="col-lg-8 mx-auto">
             <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
             <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="img/portfolio/cabin.png" alt="">
+            <img class="img-fluid mb-5" src="img/travel/phu_quoc.jpg" alt="">
             <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam
               nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit
               soluta, eos quod consequuntur itaque. Nam.</p>
@@ -417,7 +453,7 @@ EOT;
           <div class="col-lg-8 mx-auto">
             <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
             <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="img/portfolio/cake.png" alt="">
+            <img class="img-fluid mb-5" src="img/travel/da_lat.jpg" alt="">
             <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam
               nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit
               soluta, eos quod consequuntur itaque. Nam.</p>
@@ -441,7 +477,7 @@ EOT;
           <div class="col-lg-8 mx-auto">
             <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
             <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="img/portfolio/circus.png" alt="">
+            <img class="img-fluid mb-5" src="img/travel/nha_trang.jpg" alt="">
             <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam
               nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit
               soluta, eos quod consequuntur itaque. Nam.</p>
@@ -465,7 +501,7 @@ EOT;
           <div class="col-lg-8 mx-auto">
             <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
             <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="img/portfolio/game.png" alt="">
+            <img class="img-fluid mb-5" src="img/travel/tay_bac.jpg" alt="">
             <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam
               nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit
               soluta, eos quod consequuntur itaque. Nam.</p>
@@ -489,7 +525,7 @@ EOT;
           <div class="col-lg-8 mx-auto">
             <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
             <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="img/portfolio/safe.png" alt="">
+            <img class="img-fluid mb-5" src="img/travel/mountain.jpg" alt="">
             <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam
               nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit
               soluta, eos quod consequuntur itaque. Nam.</p>
@@ -513,7 +549,7 @@ EOT;
           <div class="col-lg-8 mx-auto">
             <h2 class="text-secondary text-uppercase mb-0">Project Name</h2>
             <hr class="star-dark mb-5">
-            <img class="img-fluid mb-5" src="img/portfolio/submarine.png" alt="">
+            <img class="img-fluid mb-5" src="img/travel/animal.jpg" alt="">
             <p class="mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia neque assumenda ipsam
               nihil, molestias magnam, recusandae quos quis inventore quisquam velit asperiores, vitae? Reprehenderit
               soluta, eos quod consequuntur itaque. Nam.</p>
@@ -699,7 +735,7 @@ EOT;
   </div>
   <div class="form-group">
     <label for="inputEmail" class="control-label">Email</label>
-    <input type="email" class="form-control" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required>
+    <input type="email" class="form-control" id="resEmail" name="email" placeholder="Email" data-error="Bruh, that email address is invalid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required>
     <div class="help-block with-errors"></div>
   </div>
 
@@ -712,7 +748,7 @@ EOT;
     <label for="inputPassword" class="control-label" name="password">Password</label>
     <div class="form-inline row">
       <div class="form-group col-sm-6">
-        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required>
+        <input type="password" data-minlength="6" class="form-control" id="inputPassword" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" name="password" required pattern=".{6,}" title="Must be longer than 6 characters">
       </div>
       <div class="form-group col-sm-6">
       <input type="password" data-minlength="6" class="form-control" id="inputPasswordConfirm" placeholder="Confirm Password" name="confirm"  onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required>
@@ -721,7 +757,7 @@ EOT;
     </div>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" onClick="createUserFireBase()">Submit</button>
   </div>
 </form>
         </div>
@@ -744,6 +780,7 @@ EOT;
 
   <!-- Custom scripts for this template -->
   <script src="js/freelancer.min.js"></script>
+  <script src="firebase/email.js"></script>
   <script src="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js?t=20130302"></script>
   <!-- <script type="text/javascript">
     $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd'});
