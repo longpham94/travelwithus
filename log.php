@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$result = file_get_contents($url, false, $context);
 	if ($result === FALSE) { 
 		echo '<script type="text/javascript"> alert("Unable to login, please try again later!");
-		window.location.href = "index.php";
+		window.location.href = "../index.php";
 		</script>';
 	 }
 	 else {
@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		$message = $extract_data['message'];
 		if ($return_code == 'OK'){
 			$password=md5($password);
-			$dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
+			$dbc=mysqli_connect('localhost','root','hitachi','online') or die("Cannot connect to Database ");
 			$query="SELECT * FROM users WHERE email='".$username."' AND password='".$password."' LIMIT 1";
 			$result=mysqli_query($dbc,$query);
 			if(mysqli_num_rows($result)==1)                         
@@ -42,13 +42,13 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 			else
 			{
 				echo '<script type="text/javascript"> alert("Invalid Credential, please check!");
-				window.location.href = "index.php";
+				window.location.href = "../index.php";
 				</script>';
 			}
 		}
 		else {
 			echo '<script type="text/javascript"> alert("'.$message.'");
-			window.location.href = "index.php";
+			window.location.href = "../index.php";
 			</script>';
 		}
 	 }
@@ -59,7 +59,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 if(isset($_SESSION['username'])){
 
 	$uname=$_SESSION['username'];
-	header("Location: index.php");
+	header("Location: ../index.php");
 	// if($uname=='admin@example.com'){
 	// 	header("Location: admin.php");
 	// }
