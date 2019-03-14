@@ -190,7 +190,7 @@ EOT;
                   } else {
                     echo '<tr>
               <td align="center" colspan="6">
-                <a href="#" data-toggle="modal" data-target="#myTripModal">
+                <a href="#" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal();">
                   <b>Create A New Trip</b>
                 </a>
               </td>
