@@ -11,9 +11,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$phone=filter($_POST['phone']);
 	$firebase_password=$password;
 	$password=md5($password);
-	
 
-	$dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
+	$dbc=mysqli_connect('localhost','root','hitachi','online') or die("Cannot connect to Database " . mysqli_error($dbc));
 	$query="SELECT * FROM users WHERE email='".$username."'";
 	$result=mysqli_query($dbc,$query);
 	if(mysqli_num_rows($result)==1)                         
@@ -37,7 +36,9 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 			)
 		);
 		$context  = stream_context_create($options);
+		
 		$result = file_get_contents($url, false, $context);
+
 		if ($result === FALSE) { /* Handle error */ }
         echo '<script type="text/javascript"> alert("Congratulations! Welcome to our trips. A Validation email has been sent to '.$username.', please check your inbox.");
         window.location.href = "../index.php";

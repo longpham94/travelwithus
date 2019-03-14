@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $members = filter($_POST['members']);
 
 
-        $dbc = mysqli_connect('localhost', 'dmhuy', '123456', 'online') or die("Cannot connect to Database ");
+        $dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
         if ($tripID == 'NONE') {
             $query = "INSERT INTO trips (uid,title,start_date,end_date,place,members) values ('" . $uid . "', '" . $title . "', '" . $start_date . "', '" . $end_date . "','" . $place . "', '" . $members . "')";
             $result = mysqli_query($dbc, $query);

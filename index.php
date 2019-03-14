@@ -42,6 +42,7 @@
     <link href="css/table.css" rel="stylesheet">
     <link href="https://www.malot.fr/bootstrap-datetimepicker/bootstrap-datetimepicker/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+    <link rel="icon" href="img/travel/beach.png">
 
 
 </head>
@@ -61,13 +62,13 @@
                     <li class="nav-item mx-0 mx-lg-1">
                         <?php session_start();
                         if (isset($_SESSION['username'])) {
-                          echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="./php/destroy.php">Sign
+                            echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="./php/destroy.php">Sign
               Out</a>';
-                          echo '<li class="nav-item mx-0 mx-lg-1">';
-                          echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
-                          echo '</li>';
+                            echo '<li class="nav-item mx-0 mx-lg-1">';
+                            echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
+                            echo '</li>';
                         } else {
-                          echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal"
+                            echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal"
               data-target="#myModal">Sign
               In</a>';
                         }
@@ -80,7 +81,7 @@
                     </li>
                     <?php 
                     if (isset($_SESSION['username'])) {
-                      echo '<li class="nav-item mx-0 mx-lg-1">
+                        echo '<li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="font-size: 12px;">Welcome ' . $_SESSION["username"] . '</a>
                       </li>';
                     }
@@ -104,9 +105,9 @@
     <!-- Portfolio Grid Section -->
     <?php
     if (isset($_SESSION['username'])) {
-      echo '<section class="mytrip" id="mytrip" style="display: block">';
+        echo '<section class="mytrip" id="mytrip" style="display: block">';
     } else {
-      echo '<section class="mytrip" id="mytrip" style="display: none">';
+        echo '<section class="mytrip" id="mytrip" style="display: none">';
     }
     ?>
     <div class="container">
@@ -127,13 +128,13 @@
                 </thead>
                 <?php 
                 if (isset($_SESSION['username'])) {
-                  $trips_item = "<tbody>";
-                  $dbc = mysqli_connect('localhost', 'dmhuy', '123456', 'online') or die("Cannot connect to Database ");
-                  $query = "SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=" . $_SESSION['uid'];
-                  $results = mysqli_query($dbc, $query);
-                  if (mysqli_num_rows($results) != 0) {
-                    while ($obj = $results->fetch_object()) {
-                      $trips_item .= <<<EOT
+                    $trips_item = "<tbody>";
+                    $dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
+                    $query = "SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=" . $_SESSION['uid'];
+                    $results = mysqli_query($dbc, $query);
+                    if (mysqli_num_rows($results) != 0) {
+                        while ($obj = $results->fetch_object()) {
+                            $trips_item .= <<<EOT
                 <tr>
                   <td>{$obj->title}</td>
                   <td>{$obj->place}</td>
@@ -145,17 +146,17 @@
                 </tr>
 
 EOT;
-                    }
-                    echo $trips_item;
-                  } else {
-                    echo '<tr>
+                        }
+                        echo $trips_item;
+                    } else {
+                        echo '<tr>
               <td align="center" colspan="6">
                 <a href="#" data-toggle="modal" data-target="#myTripModal">
                   <b>Create A New Trip</b>
                 </a>
               </td>
             </tr>';
-                  }
+                    }
                 }
                 ?>
                 </tbody>
@@ -539,12 +540,10 @@ EOT;
                         <!-- <div class="checkbox">
               <label><input type="checkbox" name="remember"> Remember me</label>
             </div> -->
-                        <div class="container">
-                            <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Login</button>
-                            <button type="button" class="btn btn-info" style="margin-bottom: 10px" data-target="#Popup" data-toggle="modal" data-dismiss="modal">Register</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px">Cancel</button>
-                            <span class="psw" style="margin-bottom: 10px"><a href="#">Forgot password?</a></span>
-                        </div>
+                        <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Login</button>
+                        <button type="button" class="btn btn-info" style="margin-bottom: 10px" data-target="#Popup" data-toggle="modal" data-dismiss="modal">Register</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px">Cancel</button>
+                        <span class="psw" style="margin-bottom: 10px"><a href="#">Forgot password?</a></span>
                     </form>
                 </div>
             </div>

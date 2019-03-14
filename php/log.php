@@ -30,7 +30,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		$message = $extract_data['message'];
 		if ($return_code == 'OK'){
 			$password=md5($password);
-			$dbc=mysqli_connect('localhost','dmhuy','123456','online') or die("Cannot connect to Database ");
+			$dbc=mysqli_connect('localhost','root','hitachi','online') or die("Cannot connect to Database ");
 			$query="SELECT * FROM users WHERE email='".$username."' AND password='".$password."' LIMIT 1";
 			$result=mysqli_query($dbc,$query);
 			if(mysqli_num_rows($result)==1)                         

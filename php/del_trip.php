@@ -6,7 +6,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$id = filter($_POST['tripID']);
 
 
-		$dbc = mysqli_connect('localhost', 'dmhuy', '123456', 'online') or die("Cannot connect to Database ");
+		$dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
 		$query = "DELETE FROM trips WHERE id='" . $id . "'";
 		$result = mysqli_query($dbc, $query);
 		echo mysqli_errno($dbc) . ": " . mysqli_error($dbc) . "\n";
