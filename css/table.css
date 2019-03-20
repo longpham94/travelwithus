@@ -1,7 +1,7 @@
-table.my-trip-table{
-    font-size: 28px;
+table.my-trip-table {
+  font-size: 28px;
 }
 
-#mytrip > div > div > table > thead > tr{
-    background-color: #18BC9C;
+#mytrip > div > div > table > thead > tr {
+  background-color: #18bc9c;
 }

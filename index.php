@@ -12,6 +12,21 @@
             padding-top: 16px;
         }
     </style>
+    <style>
+        iframe {
+            width: 800px;
+            /* It should not be 100% */
+            height: 800px;
+            margin-left: 0 auto;
+            /* Automatic margin from left */
+            margin-right: 0 auto;
+            /* Automatic margin from right */
+        }
+
+        div.center-a {
+            text-align: center;
+        }
+    </style>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -72,13 +87,13 @@
                     <li class="nav-item mx-0 mx-lg-1">
                         <?php session_start();
                         if (isset($_SESSION['username'])) {
-                          echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="./php/destroy.php">Sign
+                            echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="./php/destroy.php">Sign
               Out</a>';
-                          echo '<li class="nav-item mx-0 mx-lg-1">';
-                          echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
-                          echo '</li>';
+                            echo '<li class="nav-item mx-0 mx-lg-1">';
+                            echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal(); ">Create Trip</a>';
+                            echo '</li>';
                         } else {
-                          echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal"
+                            echo '<a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" data-toggle="modal"
               data-target="#myModal">Sign
               In</a>';
                         }
@@ -91,7 +106,7 @@
                     </li>
                     <?php 
                     if (isset($_SESSION['username'])) {
-                      echo '<li class="nav-item mx-0 mx-lg-1">
+                        echo '<li class="nav-item mx-0 mx-lg-1">
                         <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="font-size: 16px;">Welcome ' . $_SESSION["username"] . '</a>
                       </li>';
                     }
@@ -144,9 +159,9 @@
     <!-- Portfolio Grid Section -->
     <?php
     if (isset($_SESSION['username'])) {
-      echo '<section class="mytrip" id="mytrip" style="display: block">';
+        echo '<section class="mytrip" id="mytrip" style="display: block">';
     } else {
-      echo '<section class="mytrip" id="mytrip" style="display: none">';
+        echo '<section class="mytrip" id="mytrip" style="display: none">';
     }
     ?>
     <div class="container">
@@ -167,13 +182,13 @@
                 </thead>
                 <?php 
                 if (isset($_SESSION['username'])) {
-                  $trips_item = "<tbody>";
-                  $dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
-                  $query = "SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=" . $_SESSION['uid'];
-                  $results = mysqli_query($dbc, $query);
-                  if (mysqli_num_rows($results) != 0) {
-                    while ($obj = $results->fetch_object()) {
-                      $trips_item .= <<<EOT
+                    $trips_item = "<tbody>";
+                    $dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
+                    $query = "SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=" . $_SESSION['uid'];
+                    $results = mysqli_query($dbc, $query);
+                    if (mysqli_num_rows($results) != 0) {
+                        while ($obj = $results->fetch_object()) {
+                            $trips_item .= <<<EOT
                 <tr>
                   <td>{$obj->title}</td>
                   <td>{$obj->place}</td>
@@ -181,21 +196,29 @@
                   <td>{$obj->end_date}</td>
                   <td>{$obj->members}</td>
                   <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
-                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button></td>
+                  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button>
+                  <!-- Long add button to open iframe -->
+                  <button class="btn btn-success" id="postYourAdd" onclick="postYourAdd()">
+                      <a class="portfolio-item d-block mx-auto" id="postYourAdd" onclick="postYourAdd()" href="#iframeModal">
+                      <img src="icon/info-2x.png">
+                      </a>
+                  </button>
+                  <!--  <button id="postYourAdd" onclick="postYourAdd()" data-toggle="modal" data-target="#iframeModal">OPEN</button> -->
+                  <!-- Long add button to open iframe: END -->
+                  </td>
                 </tr>
-
 EOT;
-                    }
-                    echo $trips_item;
-                  } else {
-                    echo '<tr>
+                        }
+                        echo $trips_item;
+                    } else {
+                        echo '<tr>
               <td align="center" colspan="6">
                 <a href="#" data-toggle="modal" data-target="#myTripModal" onClick="closeTripModal();">
                   <b>Create A New Trip</b>
                 </a>
               </td>
             </tr>';
-                  }
+                    }
                 }
                 ?>
                 </tbody>
@@ -513,6 +536,34 @@ EOT;
         </div>
     </div>
 
+    <!-- Long add iframe Modal -->
+    <!--iframe Modal-->
+    <!-- <div class="modal fade container" style="margin:0px;padding:0px;overflow:hidden" id="iframeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="container text-center">
+            <div class="row">
+                <div class="mx-auto">
+                    <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="90%" width="90%" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" allowfullscreen style="background:#ffffff"></iframe>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="portfolio-modal mfp-hide" style="margin:0px;padding:0px;overflow:hidden" id="iframeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="portfolio-modal-dialog bg-white">
+            <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
+                <i class="fa fa-3x fa-times"></i>
+                
+            </a>
+            <div class="container text-center" >
+                <div class="row">
+                    <div class="mx-auto">
+                        <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" allowfullscreen style="background:#ffffff"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Long add iframe Modal: END -->
+
     <!--Delete Trip Modal-->
     <div class="modal fade" id="delTripModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -760,6 +811,15 @@ EOT;
             $("#trip_modal_header").text("Create Trip");
         }
     </script>
+
+    <!-- Long add script to open iframe -->
+    <script type="text/javascript">
+        function postYourAdd() {
+            var iframe = $("#forPostyouradd");
+            iframe.attr("src", iframe.data("src"));
+        }
+    </script>
+    <!-- Long add script to open iframe: END -->
 
 
 </body>
