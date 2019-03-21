@@ -49,6 +49,10 @@
   margin: 10px;
 }
 
+.iframeModal {
+  height: 720px;
+  width: 720px;
+}
 
 // Actual modal
 .modal-content {

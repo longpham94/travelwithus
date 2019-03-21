@@ -172,12 +172,12 @@
             <table class="table table-bordered my-trip-table">
                 <thead>
                     <tr>
-                        <th>Trip Name</th>
-                        <th>Place</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Members</th>
-                        <th>Action</th>
+                        <th class="text-center">Trip Name</th>
+                        <th class="text-center">Place</th>
+                        <th class="text-center">Start Date</th>
+                        <th class="text-center">End Date</th>
+                        <th class="text-center">Members</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <?php 
@@ -190,15 +190,15 @@
                         while ($obj = $results->fetch_object()) {
                             $trips_item .= <<<EOT
                 <tr>
-                  <td>{$obj->title}</td>
-                  <td>{$obj->place}</td>
-                  <td>{$obj->start_date}</td>
-                  <td>{$obj->end_date}</td>
-                  <td>{$obj->members}</td>
-                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
+                  <td class="text-center">{$obj->title}</td>
+                  <td class="text-center">{$obj->place}</td>
+                  <td class="text-center">{$obj->start_date}</td>
+                  <td class="text-center">{$obj->end_date}</td>
+                  <td class="text-center">{$obj->members}</td>
+                  <td class="text-center"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button>
                   <!-- Long add button to open iframe -->
-                  <button class="btn btn-success" id="postYourAdd" onclick="postYourAdd()">
+                  <button class="btn btn-warning" id="postYourAdd" onclick="postYourAdd()" title="Info">
                       <a class="portfolio-item d-block mx-auto" id="postYourAdd" onclick="postYourAdd()" href="#iframeModal">
                       <img src="icon/info-2x.png">
                       </a>
