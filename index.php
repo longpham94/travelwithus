@@ -21,6 +21,7 @@
             /* Automatic margin from left */
             margin-right: 0 auto;
             /* Automatic margin from right */
+            z-index: -1;
         }
 
         div.center-a {
@@ -198,12 +199,11 @@
                   <td class="text-center"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button>
                   <!-- Long add button to open iframe -->
-                  <button class="btn btn-warning" id="postYourAdd" onclick="postYourAdd()" title="Info">
-                      <a class="portfolio-item d-block mx-auto" id="postYourAdd" onclick="postYourAdd()" href="#iframeModal">
+                  <button class="btn btn-warning" title="Info">
+                      <a class="portfolio-item d-block mx-auto" id="addTodo" onclick="addTodo({$obj->id})" href="#iframeModal">
                       <img src="icon/info-2x.png">
                       </a>
                   </button>
-                  <!--  <button id="postYourAdd" onclick="postYourAdd()" data-toggle="modal" data-target="#iframeModal">OPEN</button> -->
                   <!-- Long add button to open iframe: END -->
                   </td>
                 </tr>
@@ -523,9 +523,6 @@ EOT;
                             <label for="pwd"><b>Password</b></label>
                             <input required autocomplete="off" type="password" class="form-control" id="pwd" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter password'" name="password">
                         </div>
-                        <!-- <div class="checkbox">
-              <label><input type="checkbox" name="remember"> Remember me</label>
-            </div> -->
                         <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Login</button>
                         <button type="button" class="btn btn-info" style="margin-bottom: 10px" data-target="#Popup" data-toggle="modal" data-dismiss="modal">Register</button>
                         <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px">Cancel</button>
@@ -538,25 +535,16 @@ EOT;
 
     <!-- Long add iframe Modal -->
     <!--iframe Modal-->
-    <!-- <div class="modal fade container" style="margin:0px;padding:0px;overflow:hidden" id="iframeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="container text-center">
-            <div class="row">
-                <div class="mx-auto">
-                    <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="90%" width="90%" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" allowfullscreen style="background:#ffffff"></iframe>
-                </div>
-            </div>
-        </div>
-    </div> -->
     <div class="portfolio-modal mfp-hide" style="margin:0px;padding:0px;overflow:hidden" id="iframeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="portfolio-modal-dialog bg-white">
             <a class="close-button d-none d-md-block portfolio-modal-dismiss" href="#">
                 <i class="fa fa-3x fa-times"></i>
-                
             </a>
-            <div class="container text-center" >
+            <div class="container text-center">
                 <div class="row">
                     <div class="mx-auto">
-                        <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" height="100%" width="100%" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" allowfullscreen style="background:#ffffff"></iframe>
+                        <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:80%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" style="background:#ffffff">
+                        </iframe>
                     </div>
                 </div>
             </div>
@@ -583,10 +571,8 @@ EOT;
                                 <input class="form-control" id="tripName" name="tripName" value="" readonly>
                                 <input class="form-control" id="tripID" name="tripID" value="" readonly style="display: none">
                             </div>
-                            <div class="container">
-                                <button type="submit" class="btn btn-success" style="margin-bottom: 10px">OK</button>
-                                <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px">Cancel</button>
-                            </div>
+                            <button type="submit" class="btn btn-success" style="margin-bottom: 10px">OK</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px">Cancel</button>
                     </form>
                 </div>
             </div>
@@ -645,7 +631,7 @@ EOT;
                         </div>
 
                         <!--Member-->
-                        <div class="btn-group" style="margin-bottom: 10px" data-link-field="dtp_input4">
+                        <div class="btn-group" style="margin-bottom: 20px" data-link-field="dtp_input4">
                             <b>Members</b>&nbsp &nbsp
                             <select required style="margin-bottom: 10px width:auto" name="members" id="members" onfocus="this.size=5;" onblur="this.size=1;" onchange="this.size=1; this.blur();">
                                 <option value="1" selected>1</option>
@@ -660,11 +646,10 @@ EOT;
                                 <option value="10">10</option>
                             </select>
                         </div>
+                        <br>
                         <!--Submit-->
-                        <div class="container">
-                            <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Submit</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px" onClick="closeTripModal();">Cancel</button>
-                        </div>
+                        <button type="submit" class="btn btn-success" style="margin-bottom: 10px">Submit</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal" style="margin-bottom: 10px" onClick="closeTripModal();">Cancel</button>
                     </form>
                 </div>
             </div>
@@ -814,9 +799,9 @@ EOT;
 
     <!-- Long add script to open iframe -->
     <script type="text/javascript">
-        function postYourAdd() {
+        function addTodo(tripID) {
             var iframe = $("#forPostyouradd");
-            iframe.attr("src", iframe.data("src"));
+            iframe.attr("src", "http://localhost:4200/list/" + tripID);
         }
     </script>
     <!-- Long add script to open iframe: END -->
