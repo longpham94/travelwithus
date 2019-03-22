@@ -191,15 +191,15 @@
                         while ($obj = $results->fetch_object()) {
                             $trips_item .= <<<EOT
                 <tr>
-                  <td class="text-center">{$obj->title}</td>
+                  <td>{$obj->title}</td>
                   <td class="text-center">{$obj->place}</td>
                   <td class="text-center">{$obj->start_date}</td>
                   <td class="text-center">{$obj->end_date}</td>
                   <td class="text-center">{$obj->members}</td>
-                  <td class="text-center"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
+                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button>
                   <!-- Long add button to open iframe -->
-                  <button class="btn btn-warning" title="Info">
+                  <button class="btn btn-warning" title="Todo List">
                       <a class="portfolio-item d-block mx-auto" id="addTodo" onclick="addTodo({$obj->id})" href="#iframeModal">
                       <img src="icon/info-2x.png">
                       </a>
@@ -543,7 +543,7 @@ EOT;
             <div class="container text-center">
                 <div class="row">
                     <div class="mx-auto">
-                        <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:80%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" style="background:#ffffff">
+                        <iframe frameborder="0" style="overflow:hidden;overflow-x:hidden;overflow-y:hidden;height:100%;width:96%;position:absolute;top:0px;left:0px;right:0px;bottom:0px" class="img-fluid mb-5" id="forPostyouradd" data-src="https://www.google.com/webhp?igu=1" src="about:blank" style="background:#ffffff">
                         </iframe>
                     </div>
                 </div>
@@ -801,7 +801,7 @@ EOT;
     <script type="text/javascript">
         function addTodo(tripID) {
             var iframe = $("#forPostyouradd");
-            iframe.attr("src", "http://localhost:4200/list/" + tripID);
+            iframe.attr("src", "http://11.11.254.57:4200/list/" + tripID);
         }
     </script>
     <!-- Long add script to open iframe: END -->
