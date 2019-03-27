@@ -196,7 +196,7 @@
                   <td class="text-center">{$obj->start_date}</td>
                   <td class="text-center">{$obj->end_date}</td>
                   <td class="text-center">{$obj->members}</td>
-                  <td><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
+                  <td class="text-center"><button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delTripModal" onClick="delTrip('{$obj->title}','{$obj->id}')" title="Delete"><img src="icon/x-2x.png"></button> 
                   <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myTripModal" onClick="editTrip('{$obj->id}','{$obj->title}','{$obj->place}','{$obj->start_date}','{$obj->end_date}','{$obj->members}' )" title="Edit"><img src="icon/pencil-2x.png"></button>
                   <!-- Long add button to open iframe -->
                   <button class="btn btn-warning portfolio-item mx-auto" title="Todo List" id="addTodo" onclick="addTodo({$obj->id})" href="#iframeModal">

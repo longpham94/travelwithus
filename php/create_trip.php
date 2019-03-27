@@ -1,5 +1,6 @@
 <?php
 session_start();
+require_once('readData.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $uid = $_SESSION['uid'];
@@ -12,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $members = filter($_POST['members']);
 
 
-        $dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
+        $dbc=mysqli_connect(readData("host"),readData("username"),readData("password"),readData("table")) or die("Cannot connect to Database ");
         if ($tripID == 'NONE') {
             $query = "INSERT INTO trips (uid,title,start_date,end_date,place,members) values ('" . $uid . "', '" . $title . "', '" . $start_date . "', '" . $end_date . "','" . $place . "', '" . $members . "')";
             $result = mysqli_query($dbc, $query);
