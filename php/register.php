@@ -1,6 +1,7 @@
 
 <?php
 session_start();
+require_once('readData.php');
 
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
@@ -12,7 +13,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$firebase_password=$password;
 	$password=md5($password);
 
-	$dbc=mysqli_connect('localhost','root','hitachi','online') or die("Cannot connect to Database " . mysqli_error($dbc));
+	$dbc=mysqli_connect(readData("host"),readData("username"),readData("password"),readData("table")) or die("Cannot connect to Database " . mysqli_error($dbc));
 	$query="SELECT * FROM users WHERE email='".$username."'";
 	$result=mysqli_query($dbc,$query);
 	if(mysqli_num_rows($result)==1)                         

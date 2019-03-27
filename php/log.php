@@ -1,12 +1,12 @@
 
 <?php
 session_start();
+require_once('readData.php');
 
 if($_SERVER['REQUEST_METHOD']=='POST')
 {
 	$username=filter($_POST['username']);
 	$password=filter($_POST['password']);
-	echo "Please log in again";
 	//connect to FireBase Service
 	$url = 'http://localhost:3000/user/signin';
 	$data = array('email' => $username, 'password' => $password);	
@@ -30,7 +30,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		$message = $extract_data['message'];
 		if ($return_code == 'OK'){
 			$password=md5($password);
-			$dbc=mysqli_connect('localhost','root','hitachi','online') or die("Cannot connect to Database ");
+			
+			$dbc=mysqli_connect(readData("host"),readData("username"),readData("password"),readData("table")) or die("Cannot connect to Database ");
 			$query="SELECT * FROM users WHERE email='".$username."' AND password='".$password."' LIMIT 1";
 			$result=mysqli_query($dbc,$query);
 			if(mysqli_num_rows($result)==1)                         
