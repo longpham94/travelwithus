@@ -182,9 +182,10 @@
                     </tr>
                 </thead>
                 <?php 
+                require_once('./php/readData.php');
                 if (isset($_SESSION['username'])) {
                     $trips_item = "<tbody>";
-                    $dbc = mysqli_connect('localhost', 'root', 'hitachi', 'online') or die("Cannot connect to Database ");
+                    $dbc=mysqli_connect(readData("host"),readData("username"),readData("password"),readData("table")) or die("Cannot connect to Database ");
                     $query = "SELECT title,place,start_date,end_date,members,id FROM trips WHERE uid=" . $_SESSION['uid'];
                     $results = mysqli_query($dbc, $query);
                     if (mysqli_num_rows($results) != 0) {
