@@ -1,9 +1,18 @@
 <?php
 function readData($str)
 {
-    $strJsonFileContents = file_get_contents("config.json");
-    $array = json_decode($strJsonFileContents, true);
+    $myObj->host = "localhost";
+    $myObj->username = "root";
+    $myObj->password = "hitachi";
+    $myObj->table = "online";
 
-    return ($array[$str]);
+    $myJSON = json_encode($myObj);
+
+    $obj = json_decode($myJSON);
+    return $obj->{$str};
+    // $strJsonFileContents = file_get_contents("./config.json");
+    // $array = json_decode($strJsonFileContents, true);
+
+    // return ($array[$str]);
 }
-?>
+ 

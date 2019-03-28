@@ -182,7 +182,7 @@
                     </tr>
                 </thead>
                 <?php 
-                require_once('./php/readData.php');
+                require_once('php/readData.php');
                 if (isset($_SESSION['username'])) {
                     $trips_item = "<tbody>";
                     $dbc=mysqli_connect(readData("host"),readData("username"),readData("password"),readData("table")) or die("Cannot connect to Database ");
